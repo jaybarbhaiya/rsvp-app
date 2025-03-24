@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "serve": "npm run build && node dist/api.js"
   },
   "keywords": [
     "RSVP"
