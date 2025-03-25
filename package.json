@@ -5,20 +5,22 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc",
-    "serve": "npm run build && node dist/api.js"
+    "serve": "npm run build && node dist/server.js"
   },
   "keywords": [
     "RSVP"
   ],
   "author": "Jay Barbhaiya",
   "license": "ISC",
-  "type": "module",
+  "type": "commonjs",
   "dependencies": {
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "pg": "^8.14.1"
   },
   "devDependencies": {
     "@types/express": "^5.0.1",
     "@types/node": "^22.13.13",
+    "@types/pg": "^8.11.11",
     "typescript": "^5.8.2"
   }
 }
