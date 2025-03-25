@@ -15,3 +15,9 @@ docker build -t rsvp-app .
 ```bash
 docker compose up
 ```
+
+- Clearing the docker cache
+
+```bash
+docker system prune
+```
