@@ -2,3 +2,9 @@
 
 ###
 GET {{host}}/
+
+### Create table
+GET {{host}}/setup
+
+### Get all rows from rsvps table
+GET {{host}}/rsvps
