@@ -1,10 +1,18 @@
 @host = http://localhost:3000
 
-###
-GET {{host}}/
-
 ### Create table
-GET {{host}}/setup
+GET {{host}}/createTable
 
 ### Get all rows from rsvps table
-GET {{host}}/rsvps
+GET {{host}}/get_all_rsvps
+
+### create a rsvp
+POST {{host}}/rsvps
+Content-Type: application/json
+
+{
+    "first_name": "John",
+    "last_name": "Doe",
+    "rsvp_response": true,
+    "number_of_guests": 2
+}

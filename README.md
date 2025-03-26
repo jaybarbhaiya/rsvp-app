@@ -13,7 +13,7 @@ docker build -t rsvp-app .
 - Running the docker compose
 
 ```bash
-docker compose up
+docker compose up -d
 ```
 
 - Clearing the docker cache

@@ -1,22 +1,34 @@
-import express from 'express';
-import { pool } from './db';
+import express from "express";
+import { pool } from "./db";
+import path from "path";
 
 const app = express();
 const port = 3000;
 
 app.use(express.json());
+app.use(express.static(path.join(__dirname + "/../site")));
 
-app.get('/', (req, res) => {
-  res.send('Hello World!');
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname + "/../site/rsvp.html"));
 });
 
 // Create rsvps table if it doesn't exist
-app.get('/setup', async (req, res) => {
+app.get("/createTable", async (req, res) => {
   try {
     await pool.query(
-      'CREATE TABLE IF NOT EXISTS rsvps (id SERIAL PRIMARY KEY, name TEXT, email TEXT, response BOOLEAN)'
+      "CREATE TABLE IF NOT EXISTS rsvps (id SERIAL PRIMARY KEY, first_name TEXT, last_name TEXT, rsvp_response BOOLEAN, number_of_guests INTEGER)"
     );
-    res.status(200).send('Table created or already exists');
+    res.status(200).send("Table created");
+  } catch (error) {
+    res.status(500);
+    console.error(error);
+  }
+});
+
+app.get("/dropTable", async (req, res) => {
+  try {
+    await pool.query("DROP TABLE IF EXISTS rsvps");
+    res.status(200).send("Table dropped");
   } catch (error) {
     res.status(500);
     console.error(error);
@@ -24,9 +36,9 @@ app.get('/setup', async (req, res) => {
 });
 
 // Get all rsvps
-app.get('/rsvps', async (req, res) => {
+app.get("/get_all_rsvps", async (req, res) => {
   try {
-    const { rows } = await pool.query('SELECT * FROM rsvps');
+    const { rows } = await pool.query("SELECT * FROM rsvps");
     res.status(200).json(rows);
   } catch (error) {
     res.status(500);
@@ -35,17 +47,24 @@ app.get('/rsvps', async (req, res) => {
 });
 
 // Create a new rsvp
-app.post('/rsvps', async (req, res) => {
-  const { name, email, response } = req.body;
+app.post("/rsvps", async (req, res) => {
+  const { first_name, last_name,  rsvp_response, number_of_guests } = req.body;
   try {
     // check if the data already exists
-    const { rows } = await pool.query('SELECT * FROM rsvps WHERE name = $1 AND email = $2', [name, email]);
+    const { rows } = await pool.query(
+      "SELECT * FROM rsvps WHERE first_name = $1 AND last_name = $2",
+      [first_name, last_name]
+    );
+    console.log(rows);
     if (rows.length > 0) {
-      res.status(400).send('RSVP already exists');
+      res.status(400).send("RSVP already exists");
       return;
     }
-    await pool.query('INSERT INTO rsvps (name, email, response) VALUES ($1, $2, $3)', [name, email, response]);
-    res.status(201).send('RSVP added');
+    await pool.query(
+      "INSERT INTO rsvps (first_name, last_name, rsvp_response, number_of_guests) VALUES ($1, $2, $3, $4)",
+      [first_name, last_name, rsvp_response, number_of_guests]
+    );
+    res.status(201).send("RSVP added");
   } catch (error) {
     res.status(500);
     console.error(error);
@@ -53,5 +72,5 @@ app.post('/rsvps', async (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Server started at http://localhost:${port}`);
+  console.log(`Server started at http://localhost:${port}`);
 });
