@@ -1,5 +1,10 @@
+body {
+  font-family: "Righteous", sans-serif;
+  font-weight: 400;
+}
+
 #bear {
   width: auto;
-  height: 70vh;
+  max-height: 70vh;
   object-fit: contain;
 }
