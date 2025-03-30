@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname + "/../site")));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname + "/../site/rsvp.html"));
+  res.sendFile(path.join(__dirname + "/../site/index.html"));
 });
 
 // Create rsvps table if it doesn't exist
