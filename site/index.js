@@ -56,7 +56,6 @@ const submitRsvp = () => {
   );
   xhr.onload = () => {
     if (xhr.status === 409) {
-      alert("You have already submitted an RSVP");
       const response = JSON.parse(xhr.responseText)[0];
       const id = response.id;
       askForRsvpChange(id, firstName, lastName, rsvp, guests);
