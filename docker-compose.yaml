@@ -7,6 +7,6 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
   app:
-    image: rsvp-app
+    image: jaybarb1990/rsvp-app
     ports:
       - "3000:3000"
