@@ -11,6 +11,9 @@ app.use(express.static(path.join(__dirname + "/../site")));
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname + "/../site/index.html"));
 });
+app.get("/rsvp", (req, res) => {
+  res.sendFile(path.join(__dirname + "/../site/rsvp.html"));
+});
 
 // Create rsvps table if it doesn't exist
 app.get("/createTable", async (req, res) => {
