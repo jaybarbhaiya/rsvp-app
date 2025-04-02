@@ -28,9 +28,10 @@ xhr.onload = () => {
       rsvpList.appendChild(tr);
     });
 
+    const totalYesGuests = rsvps.filter((rsvp) => rsvp.rsvp_response === true);
     const totalGuests = rsvps.reduce(
       (acc, rsvp) => acc + rsvp.number_of_guests,
-      rsvps.length
+      totalYesGuests.length
     );
     document.getElementById(
       "total"
