@@ -95,6 +95,24 @@ app.put("/rsvps/:id", async (req, res) => {
   }
 });
 
+// Delete an rsvp
+app.delete("/rsvps/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const { rowCount } = await pool.query("DELETE FROM rsvps WHERE id = $1", [
+      id,
+    ]);
+    if (rowCount === 0) {
+      res.status(404).send("RSVP not found");
+      return;
+    }
+    res.status(200).send("RSVP deleted");
+  } catch (error) {
+    res.status(500);
+    console.error(error);
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server started at http://localhost:${port}`);
 });
